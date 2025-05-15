@@ -2,7 +2,7 @@
 # librerias
 import os
 from dash import Dash
-from layout import create_layout
+from src.layout import create_layout
 # ---------------------------------------------------------------------------------------------------
 # asignacion de variables
 app = Dash(__name__)
