@@ -2,7 +2,7 @@
 # librerias
 from dash import html,dcc
 import pandas as pd
-from components import mapa,grafico_lineas, grafico_barras, grafico_circular, tabla, histograma,grafico_apiladas
+from src.components import mapa,grafico_lineas, grafico_barras, grafico_circular, tabla, histograma,grafico_apiladas
 
 # ---------------------------------------------------------------------------------------------------
 # cargar la data
