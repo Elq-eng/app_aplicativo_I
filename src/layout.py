@@ -1,5 +1,9 @@
+# # ---------------------------------------------------------------------------------------------------
+# # librerias
 from dash import html, dcc
 
+# # ---------------------------------------------------------------------------------------------------
+# # funcion principal
 def create_layout(app):
     return html.Div([
         html.H1("Dashboard de Mortalidad en Colombia 2019", style={'textAlign': 'center'}),

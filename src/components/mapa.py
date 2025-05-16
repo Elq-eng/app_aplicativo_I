@@ -52,8 +52,8 @@ coord_departamentos = {
 # funcion principal
 
 def create_map(load_mortality_data,load_divipola_data):
-    df = load_mortality_data()
-    divipola = load_divipola_data()
+    df = load_mortality_data
+    divipola = load_divipola_data
 
     # Agrupar cantidad de muertes por código de departamento
     df_grouped = df.groupby("COD_DEPARTAMENTO").size().reset_index(name="MUERTES")

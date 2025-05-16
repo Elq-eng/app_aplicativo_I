@@ -15,8 +15,8 @@ meses = {
 # ---------------------------------------------------------------------------------------------------
 # funcion principal
 
-def create_lines(load_mortality_data,load_divipola_data):
-    df = load_mortality_data()
+def create_lines(load_mortality_data):
+    df = load_mortality_data
 
     muertes_por_mes = df.groupby("MES").size().reset_index(name="MUERTES")
 
