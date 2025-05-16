@@ -3,18 +3,21 @@
 from dash import html,dcc
 import pandas as pd
 from src.components import mapa,grafico_lineas, grafico_barras, grafico_circular, tabla, histograma,grafico_apiladas
+from functools import lru_cache
 
 # ---------------------------------------------------------------------------------------------------
 # cargar la data
-
+@lru_cache(maxsize=None)
 def load_mortality_data():
     df = pd.read_excel("data/NoFetal2019.xlsx")
     return df
 
+@lru_cache(maxsize=None)
 def load_divipola_data():
     df = pd.read_excel("data/Divipola.xlsx")
     return df
 
+@lru_cache(maxsize=None)
 def load_code_death_data():
     df = pd.read_excel("data/CodigosDeMuerte.xlsx")
     return df

@@ -1,10 +1,9 @@
 services:
   - type: web
-    name: tu-nombre-de-app
+    name: dashboard-mortalidad
     env: python
-    plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: python src/app.py
+    startCommand: gunicorn src.app:server --bind 0.0.0.0:$PORT --timeout 120
     envVars:
-      - key: PORT
-        value: 8050
+      - key: PYTHONUNBUFFERED
+        value: "1"
