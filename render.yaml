@@ -1,7 +1,10 @@
 services:
   - type: web
-    name: dash-app
+    name: tu-nombre-de-app
     env: python
     plan: free
     buildCommand: pip install -r requirements.txt
     startCommand: python src/app.py
+    envVars:
+      - key: PORT
+        value: 8050
