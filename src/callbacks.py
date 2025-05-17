@@ -25,9 +25,9 @@ def register_callbacks(app):
             return mortality_data, divipola_data, code_death_data
 
         # Cargar data
-        mortality_df = pd.read_excel("data/NoFetal2019.xlsx")
-        divipola_df = pd.read_excel("data/Divipola.xlsx")
-        code_death_df = pd.read_excel("data/CodigosDeMuerte.xlsx")
+        mortality_df =  pd.read_csv("data/NoFetal2019_8.csv",sep=';', encoding='utf-8')
+        divipola_df = pd.read_csv("data/Divipola_8.csv", sep=';', encoding='utf-8')
+        code_death_df = pd.read_csv("data/CodigosDeMuerte_8.csv",sep=';', encoding='utf-8')
 
         # Convertir a dict para almacenamiento en dcc.Store
         return mortality_df.to_dict('records'), divipola_df.to_dict('records'), code_death_df.to_dict('records')
