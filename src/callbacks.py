@@ -2,7 +2,7 @@
 # # librerias
 import pandas as pd
 from dash.dependencies import Input, Output, State
-from dash import html
+from dash import html, dash
 from src.components import mapa, grafico_lineas, grafico_barras, grafico_circular, tabla, histograma, grafico_apiladas
 
 
@@ -20,17 +20,23 @@ def register_callbacks(app):
         State('memory-code-death-data', 'data'),
     )
     def load_data_on_demand(tab, mortality_data, divipola_data, code_death_data):
-        # Si ya está cargada la data, no la cargamos otra vez
         if mortality_data and divipola_data and code_death_data:
             return mortality_data, divipola_data, code_death_data
 
-        # Cargar data
-        mortality_df =  pd.read_csv("data/NoFetal2019_8.csv",sep=';', encoding='utf-8')
-        divipola_df = pd.read_csv("data/Divipola_8.csv", sep=';', encoding='utf-8')
-        code_death_df = pd.read_csv("data/CodigosDeMuerte_8.csv",sep=';', encoding='utf-8')
+        try:
+            mortality_df = pd.read_csv("data/NoFetal2019_8.csv", sep=';', encoding='utf-8')
+            divipola_df = pd.read_csv("data/Divipola_8.csv", sep=';', encoding='utf-8')
+            code_death_df = pd.read_csv("data/CodigosDeMuerte_8.csv", sep=';', encoding='utf-8')
 
-        # Convertir a dict para almacenamiento en dcc.Store
-        return mortality_df.to_dict('records'), divipola_df.to_dict('records'), code_death_df.to_dict('records')
+            return (
+                mortality_df.to_dict('records'),
+                divipola_df.to_dict('records'),
+                code_death_df.to_dict('records'),
+            )
+
+        except Exception as e:
+            print("❌ Error al cargar archivos CSV:", e)
+            return dash.no_update, dash.no_update, dash.no_update
 
 
     @app.callback(
