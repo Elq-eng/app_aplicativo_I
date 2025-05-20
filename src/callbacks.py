@@ -6,10 +6,15 @@ from dash import html, dash
 from src.components import mapa, grafico_lineas, grafico_barras, grafico_circular, tabla, histograma, grafico_apiladas
 import logging
 import os
+import glob
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+data_path = "/opt/render/project/src/data"  # Verifica que sea esta
 
+logger.info("🔍 Archivos disponibles en data/:")
+for f in glob.glob(f"{data_path}/*"):
+    logger.info(f"🟢 Encontrado: {f} - {os.path.exists(f)}")
 
 # # ---------------------------------------------------------------------------------------------------
 # # funcion principal
