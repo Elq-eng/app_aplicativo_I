@@ -7,7 +7,8 @@ from src.components import mapa, grafico_lineas, grafico_barras, grafico_circula
 import os
 
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(BASE_DIR, '..', 'data')
 
 # # ---------------------------------------------------------------------------------------------------
 # # funcion principal
@@ -27,9 +28,9 @@ def register_callbacks(app):
             return mortality_data, divipola_data, code_death_data
 
         try:
-            mortality_path = os.path.join(BASE_DIR, "data", "NoFetal2019_8.csv")
-            divipola_path = os.path.join(BASE_DIR, "data", "Divipola_8.csv")
-            code_death_path = os.path.join(BASE_DIR, "data", "CodigosDeMuerte_8.csv")
+            mortality_path = os.path.join(DATA_DIR, "data", "NoFetal2019_8.csv")
+            divipola_path = os.path.join(DATA_DIR, "data", "Divipola_8.csv")
+            code_death_path = os.path.join(DATA_DIR, "data", "CodigosDeMuerte_8.csv")
             mortality_df = pd.read_csv(mortality_path, sep=';', encoding='utf-8')
             divipola_df = pd.read_csv(divipola_path, sep=';', encoding='utf-8')
             code_death_df = pd.read_csv(code_death_path, sep=';', encoding='utf-8')
