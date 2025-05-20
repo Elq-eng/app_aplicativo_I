@@ -34,9 +34,9 @@ def register_callbacks(app):
             divipola_path = os.path.join(BASE_DIR, "src/data", "Divipola_8.csv")
             code_death_path = os.path.join(BASE_DIR, "src/data", "CodigosDeMuerte_8.csv")
             print(divipola_path)
-            mortality_df = pd.read_csv(mortality_path, sep=';', encoding='utf-8-sig')
-            divipola_df = pd.read_csv(divipola_path, sep=';', encoding='utf-8-sig')
-            code_death_df = pd.read_csv(code_death_path, sep=';', encoding='utf-8-sig')
+            mortality_df = pd.read_csv(mortality_path, sep=';', encoding='utf-8')
+            divipola_df = pd.read_csv(divipola_path, sep=';', encoding='utf-8')
+            code_death_df = pd.read_csv(code_death_path, sep=';', encoding='utf-8')
 
             logger.info("Datos cargados y enviados a memoria.")
 
