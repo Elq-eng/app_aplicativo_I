@@ -15,6 +15,7 @@ DATA_DIR = os.path.join(BASE_DIR, "data")
 # Función principal de callbacks
 def register_callbacks(app):
 
+    # Callback para cargar los datos y almacenarlos en memoria
     @app.callback(
         Output('memory-mortality-data', 'data'),
         Output('memory-divipola-data', 'data'),
@@ -23,9 +24,16 @@ def register_callbacks(app):
         State('memory-mortality-data', 'data'),
         State('memory-divipola-data', 'data'),
         State('memory-code-death-data', 'data'),
+        prevent_initial_call=False  # Asegura que se ejecute al cargar la app
     )
     def load_data_on_demand(tab, mortality_data, divipola_data, code_death_data):
-        if mortality_data and divipola_data and code_death_data:
+        # Si los datos ya están cargados, no volver a cargar
+        if (
+            mortality_data is not None and len(mortality_data) > 0 and
+            divipola_data is not None and len(divipola_data) > 0 and
+            code_death_data is not None and len(code_death_data) > 0
+        ):
+            print("🟢 Datos ya cargados en memoria.")
             return mortality_data, divipola_data, code_death_data
 
         try:
@@ -33,6 +41,11 @@ def register_callbacks(app):
             mortality_path = os.path.join(DATA_DIR, "NoFetal2019_8.csv")
             divipola_path = os.path.join(DATA_DIR, "Divipola_8.csv")
             code_death_path = os.path.join(DATA_DIR, "CodigosDeMuerte_8.csv")
+
+            print("📂 Cargando archivos:")
+            print(f"  ➤ {mortality_path}")
+            print(f"  ➤ {divipola_path}")
+            print(f"  ➤ {code_death_path}")
 
             # Leer CSVs
             mortality_df = pd.read_csv(mortality_path, sep=';', encoding='utf-8')
@@ -48,10 +61,9 @@ def register_callbacks(app):
 
         except Exception as e:
             print("❌ Error al cargar archivos CSV:", e)
-            # Devolver vacío para evitar que el callback se quede colgado
             return [], [], []
 
-    # ---------------------------------------------------------------------------------------------------
+    # Callback para renderizar el contenido de la pestaña seleccionada
     @app.callback(
         Output('tab-content', 'children'),
         Input('tabs', 'value'),
@@ -60,10 +72,14 @@ def register_callbacks(app):
         Input('memory-code-death-data', 'data'),
     )
     def render_tab_content(tab, mortality_data, divipola_data, code_death_data):
+        print("📦 Tab actual:", tab)
+        print("📊 Len mortality:", len(mortality_data) if mortality_data else "vacío")
+        print("📍 Len divipola:", len(divipola_data) if divipola_data else "vacío")
+        print("💀 Len code death:", len(code_death_data) if code_death_data else "vacío")
+
         if not mortality_data or not divipola_data or not code_death_data:
             return html.Div("Cargando datos...")
 
-        # Convertir a DataFrames
         try:
             mortality_df = pd.DataFrame(mortality_data)
             divipola_df = pd.DataFrame(divipola_data)
@@ -123,6 +139,5 @@ def register_callbacks(app):
                     'flexWrap': 'wrap'
                 })
             ])
-
         else:
             return html.Div("Tab no válida seleccionada.")
