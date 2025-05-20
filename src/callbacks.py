@@ -40,9 +40,9 @@ def register_callbacks(app):
 
             logger.info("Datos cargados y enviados a memoria.")
 
-            # logger.info("📊 Len mortality:", len(mortality_data) if mortality_data else "vacío")
-            # logger.info("📍 Len divipola:", len(divipola_data) if divipola_data else "vacío")
-            # logger.info("💀 Len code death:", len(code_death_data) if code_death_data else "vacío")
+            logger.info(f"📊 Len mortality: {len(mortality_data)} ")
+            logger.info(f"📍 Len divipola: {len(divipola_data)} ")
+            logger.info(f"💀 Len code death: {len(code_death_data)} ")
 
             return (
                 mortality_df.to_dict('records'),
@@ -61,6 +61,7 @@ def register_callbacks(app):
         Input('memory-mortality-data', 'data'),
         Input('memory-divipola-data', 'data'),
         Input('memory-code-death-data', 'data'),
+        prevent_initial_call=True
     )
     def render_tab_content(tab, mortality_data, divipola_data, code_death_data):
         # Si la data aún no llegó, mostrar mensaje

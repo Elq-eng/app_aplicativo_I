@@ -4,6 +4,12 @@ import os
 from dash import Dash
 from src.layout import create_layout
 from src.callbacks import register_callbacks
+import psutil
+import logging
+
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------------------------------
 # asignacion de variables
@@ -16,9 +22,12 @@ server = app.server
 # layout
 app.layout = create_layout(app)
 
+
 # ---------------------------------------------------------------------------------------------------
 # callback
+
 register_callbacks(app)
+
 # ---------------------------------------------------------------------------------------------------
 # llamado de funcion principal
 # Exponer el servidor para Render
