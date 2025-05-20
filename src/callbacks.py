@@ -40,9 +40,9 @@ def register_callbacks(app):
 
             logger.info("Datos cargados y enviados a memoria.")
 
-            logger.info("📊 Len mortality:", len(mortality_data) if mortality_data else "vacío")
-            logger.info("📍 Len divipola:", len(divipola_data) if divipola_data else "vacío")
-            logger.info("💀 Len code death:", len(code_death_data) if code_death_data else "vacío")
+            # logger.info("📊 Len mortality:", len(mortality_data) if mortality_data else "vacío")
+            # logger.info("📍 Len divipola:", len(divipola_data) if divipola_data else "vacío")
+            # logger.info("💀 Len code death:", len(code_death_data) if code_death_data else "vacío")
 
             return (
                 mortality_df.to_dict('records'),
