@@ -9,20 +9,20 @@ from src.callbacks import register_callbacks
 # asignacion de variables
 print("Iniciando aplicación Dash...")
 app = Dash(__name__)
+server = app.server
 print("App Dash creada.")
 
 
 # ---------------------------------------------------------------------------------------------------
 # layout
 app.layout = create_layout(app)
-
 # ---------------------------------------------------------------------------------------------------
 # callback
 register_callbacks(app)
 # ---------------------------------------------------------------------------------------------------
 # llamado de funcion principal
 # Exponer el servidor para Render
-server = app.server
+
 print("Server exportado.")
 
 if __name__ == '__main__':
