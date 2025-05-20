@@ -30,18 +30,19 @@ def register_callbacks(app):
         try:
 
             BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-            mortality_path = os.path.join(BASE_DIR, "data", "NoFetal2019_8.csv")
-            divipola_path = os.path.join(BASE_DIR, "data", "Divipola_8.csv")
-            code_death_path = os.path.join(BASE_DIR, "data", "CodigosDeMuerte_8.csv")
+            mortality_path = os.path.join(BASE_DIR, "src/data", "NoFetal2019_8.csv")
+            divipola_path = os.path.join(BASE_DIR, "src/data", "Divipola_8.csv")
+            code_death_path = os.path.join(BASE_DIR, "src/data", "CodigosDeMuerte_8.csv")
+            print(divipola_path)
             mortality_df = pd.read_csv(mortality_path, sep=';', encoding='utf-8-sig')
             divipola_df = pd.read_csv(divipola_path, sep=';', encoding='utf-8-sig')
             code_death_df = pd.read_csv(code_death_path, sep=';', encoding='utf-8-sig')
 
             logger.info("Datos cargados y enviados a memoria.")
 
-            logger.info(f"📊 Len mortality: {len(mortality_data)} ")
-            logger.info(f"📍 Len divipola: {len(divipola_data)} ")
-            logger.info(f"💀 Len code death: {len(code_death_data)} ")
+            logger.info(f"📊 Len mortality: {len(mortality_df.to_dict('records'))} ")
+            logger.info(f"📍 Len divipola: {len(divipola_df.to_dict('records'))} ")
+            logger.info(f"💀 Len code death: {len(code_death_df.to_dict('records'))} ")
 
             return (
                 mortality_df.to_dict('records'),
