@@ -6,18 +6,19 @@ from dash import html, dcc
 # # funcion principal
 def create_layout(app):
     return html.Div([
-        html.H1("Dashboard de Mortalidad en Colombia 2019", style={'textAlign': 'center'}),
+        # Almacenan los datos en formato JSON para que los callbacks los puedan consumir
+        dcc.Store(id='memory-mortality-data', data=None),
+        dcc.Store(id='memory-divipola-data', data=None),
+        dcc.Store(id='memory-code-death-data', data=None),
 
-        dcc.Store(id='memory-mortality-data'),
-        dcc.Store(id='memory-divipola-data'),
-        dcc.Store(id='memory-code-death-data'),
-
+        # Tabs para navegación
         dcc.Tabs(id='tabs', value='tab-1', children=[
-            dcc.Tab(label="Mapa por Departamento y Evolución Mensual", value='tab-1'),
-            dcc.Tab(label="Las ciudades más violentas y con el menor indice de mortalidad", value='tab-2'),
-            dcc.Tab(label="Listado de las 10 principales causas de muerte", value='tab-3'),
+            dcc.Tab(label='Mapa', value='tab-1'),
+            dcc.Tab(label='Ciudades', value='tab-2'),
+            dcc.Tab(label='Causas', value='tab-3'),
         ]),
 
+        # Div contenedor para contenido dinámico
         html.Div(id='tab-content')
     ])
 

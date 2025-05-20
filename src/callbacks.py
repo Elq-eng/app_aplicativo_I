@@ -1,69 +1,10 @@
-# ---------------------------------------------------------------------------------------------------
-# Librerías
 import pandas as pd
-import os
-from dash.dependencies import Input, Output, State
-from dash import html, dash
+from dash.dependencies import Input, Output
+from dash import html
 from src.components import mapa, grafico_lineas, grafico_barras, grafico_circular, tabla, histograma, grafico_apiladas
 
-# ---------------------------------------------------------------------------------------------------
-# Rutas absolutas para los archivos de datos
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-DATA_DIR = os.path.join(BASE_DIR, "data")
-
-# ---------------------------------------------------------------------------------------------------
-# Función principal de callbacks
 def register_callbacks(app):
 
-    # Callback para cargar los datos y almacenarlos en memoria
-    @app.callback(
-        Output('memory-mortality-data', 'data'),
-        Output('memory-divipola-data', 'data'),
-        Output('memory-code-death-data', 'data'),
-        Input('tabs', 'value'),
-        State('memory-mortality-data', 'data'),
-        State('memory-divipola-data', 'data'),
-        State('memory-code-death-data', 'data'),
-        prevent_initial_call=False  # Asegura que se ejecute al cargar la app
-    )
-    def load_data_on_demand(tab, mortality_data, divipola_data, code_death_data):
-        # Si los datos ya están cargados, no volver a cargar
-        if (
-            mortality_data is not None and len(mortality_data) > 0 and
-            divipola_data is not None and len(divipola_data) > 0 and
-            code_death_data is not None and len(code_death_data) > 0
-        ):
-            print("🟢 Datos ya cargados en memoria.")
-            return mortality_data, divipola_data, code_death_data
-
-        try:
-            # Rutas completas seguras
-            mortality_path = os.path.join(DATA_DIR, "NoFetal2019_8.csv")
-            divipola_path = os.path.join(DATA_DIR, "Divipola_8.csv")
-            code_death_path = os.path.join(DATA_DIR, "CodigosDeMuerte_8.csv")
-
-            print("📂 Cargando archivos:")
-            print(f"  ➤ {mortality_path}")
-            print(f"  ➤ {divipola_path}")
-            print(f"  ➤ {code_death_path}")
-
-            # Leer CSVs
-            mortality_df = pd.read_csv(mortality_path, sep=';', encoding='utf-8')
-            divipola_df = pd.read_csv(divipola_path, sep=';', encoding='utf-8')
-            code_death_df = pd.read_csv(code_death_path, sep=';', encoding='utf-8')
-
-            print("✅ Datos cargados correctamente.")
-            return (
-                mortality_df.to_dict('records'),
-                divipola_df.to_dict('records'),
-                code_death_df.to_dict('records'),
-            )
-
-        except Exception as e:
-            print("❌ Error al cargar archivos CSV:", e)
-            return [], [], []
-
-    # Callback para renderizar el contenido de la pestaña seleccionada
     @app.callback(
         Output('tab-content', 'children'),
         Input('tabs', 'value'),
