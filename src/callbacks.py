@@ -4,7 +4,10 @@ import pandas as pd
 from dash.dependencies import Input, Output, State
 from dash import html, dash
 from src.components import mapa, grafico_lineas, grafico_barras, grafico_circular, tabla, histograma, grafico_apiladas
+import os
 
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # # ---------------------------------------------------------------------------------------------------
 # # funcion principal
@@ -24,10 +27,17 @@ def register_callbacks(app):
             return mortality_data, divipola_data, code_death_data
 
         try:
-            mortality_df = pd.read_csv("data/NoFetal2019_8.csv", sep=';', encoding='utf-8')
-            divipola_df = pd.read_csv("data/Divipola_8.csv", sep=';', encoding='utf-8')
-            code_death_df = pd.read_csv("data/CodigosDeMuerte_8.csv", sep=';', encoding='utf-8')
+            mortality_path = os.path.join(BASE_DIR, "data", "NoFetal2019_8.csv")
+            divipola_path = os.path.join(BASE_DIR, "data", "Divipola_8.csv")
+            code_death_path = os.path.join(BASE_DIR, "data", "CodigosDeMuerte_8.csv")
+            mortality_df = pd.read_csv(mortality_path, sep=';', encoding='utf-8')
+            divipola_df = pd.read_csv(divipola_path, sep=';', encoding='utf-8')
+            code_death_df = pd.read_csv(code_death_path, sep=';', encoding='utf-8')
 
+            print("🧾 Rutas CSV:")
+            print(mortality_path)
+            print(divipola_path)
+            print(code_death_path)
             return (
                 mortality_df.to_dict('records'),
                 divipola_df.to_dict('records'),
